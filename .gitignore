@@ -1,0 +1,6 @@
+/node_modules
+.DS_Store
+validation.json
+/public
+eslint
+node_modules

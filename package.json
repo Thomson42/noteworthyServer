@@ -1,0 +1,39 @@
+{
+  "name": "noteworthy-server",
+  "version": "1.0.0",
+  "description": "The server side portion of the Alchemy code lab react redux lab",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --recursive",
+    "unit": "mocha test/unit",
+    "e2e": "mocha test/e2e",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thomson42/noteworthyServer.git"
+  },
+  "author": "Christopher Thomson",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.6",
+    "morgan": "^1.8.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.19.0",
+    "eslint-plugin-import": "^2.2.0",
+    "mocha": "^3.3.0"
+  },
+  "bugs": {
+    "url": "https://github.com/Thomson42/noteworthyServer/issues"
+  },
+  "homepage": "https://github.com/Thomson42/noteworthyServer#readme"
+}
