@@ -6,7 +6,7 @@ const assert = require('chai').assert;
 describe('noteworthy api', () => {
     
     before(db.drop);
-    //before(() => child_process.execSync('mongoimport --file ./lib/bunnies/BunnyData.json --jsonArray --db image-gallery-test --collection bunnies'));
+    //before(() => child_process.execSync('mongoimport --file ./lib/folders/FolderData.json --jsonArray --db image-gallery-test --collection bunnies'));
     
     let note = null;
     before(() => {
