@@ -28,13 +28,13 @@ describe('noteworthy api', () => {
             .then(res => res.body);
     }
 
-    // it('initial /GET returns a list of 3', () => {
-    //     return request.get('/api/bunnies')
-    //             .then(req => {
-    //                 const bunnies = req.body;
-    //                 assert.deepEqual(bunnies.length, 3);
-    //             });
-    // });
+    it('initial /GET returns a main folder', () => {
+        return request.get('/api/folders')
+                .then(req => {
+                    const folders = req.body;
+                    assert.deepEqual(folders[0].title, 'Main Folder');
+                });
+    });
     it('roundtrips gets a new folder', () => {
         return saveFolder(newFolder)
             .then(saved => {
