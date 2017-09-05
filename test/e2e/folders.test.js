@@ -1,30 +1,29 @@
 const db = require('./_db');
 const request = require('./_request');
 const assert = require('chai').assert;
-//const child_process = require('child_process');
+const child_process = require('child_process');
 
 describe('noteworthy api', () => {
     
     before(db.drop);
-    //before(() => child_process.execSync('mongoimport --file ./lib/folders/FolderData.json --jsonArray --db image-gallery-test --collection bunnies'));
-    
+    before(() => child_process.execSync('mongoimport --file ./lib/data/FolderData.json --jsonArray --db noteworthy-test --collection folders'));
+    before(() => child_process.execSync('mongoimport --file ./lib/data/NoteData.json --jsonArray --db noteworthy-test --collection notes'));    
+
     let note = null;
     before(() => {
-        return request.post('/notes')
-            .send({name: 'universal notes'})
+        return request.post('/api/notes')
+            .send({title: 'README2'})
             .then(res => res.body)
             .then(savedNote => note = savedNote);
     });
-    let MainFolder =  {
-        title: 'Main Folder',
-        children: [],
+    let newFolder =  {
+        title: 'New Folder',
         notes: []
     };
     function saveFolder(folder) {
-        folder.children = [{folder: folder._id}];
         folder.notes = [{note: note._id}];
         return request
-            .post('/folders')
+            .post('/api/folders')
             .send(folder)
             .then(res => res.body);
     }
@@ -36,18 +35,18 @@ describe('noteworthy api', () => {
     //                 assert.deepEqual(bunnies.length, 3);
     //             });
     // });
-    it('roundtrip gets a new folder', () => {
-        return saveFolder(MainFolder)
+    it('roundtrips gets a new folder', () => {
+        return saveFolder(newFolder)
             .then(saved => {
                 assert.ok(saved._id, 'saved has ID');
-                MainFolder = saved;
+                newFolder = saved;
             })
             .then(() => {
-                return request.get(`/folders/${MainFolder._id}`);
+                return request.get(`/api/folders/${newFolder._id}`);
             })
             .then(res => res.body)
             .then(got => {
-                assert.deepEqual(got, MainFolder);
+                assert.deepEqual(got, newFolder);
             });
     });
 });

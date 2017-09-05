@@ -24,25 +24,10 @@ describe('Folder model', () => {
             title:'little note',
             description: 'A small reminder someone wrote.'
         });
-        const mainFolder = new Folder({
-            title:'main folder',
-            children: []
-        });
-        const sillyFolder = new Folder({
-            title: 'silly folder',
-            parent: 'main folder'
-        });
-        const badFolder = new Folder({
-            title: 'bad folder',
-            parent: 'main folder'
-        });
         const specialFolder = new Folder({
             title: 'special folder',
-            children: [sillyFolder, badFolder],
-            notes: [littleNote],
-            parent: mainFolder
+            notes: [littleNote]
         });
-        mainFolder.children.push(specialFolder);
         return specialFolder.validate();
     });
 });
