@@ -22,7 +22,7 @@ describe('Folder model', () => {
     it('validates with more than just the required fields', () => {
         const littleNote = new Note({
             title:'little note',
-            description: 'A small reminder someone wrote.'
+            contens: 'A small reminder someone wrote.'
         });
         const specialFolder = new Folder({
             title: 'special folder',

@@ -20,6 +20,13 @@ describe('noteworthy api', () => {
         title: 'New Folder',
         notes: []
     };
+    const favorites = {
+        title: 'favorites',
+        notes: []
+    };
+    let crazyFolder = {
+        title: 'crazy ideas'
+    };
     function saveFolder(folder) {
         folder.notes = [{note: note._id}];
         return request
@@ -36,7 +43,9 @@ describe('noteworthy api', () => {
                 });
     });
     it('roundtrips gets a new folder', () => {
-        return saveFolder(newFolder)
+        return saveFolder(crazyFolder)
+        .then(saved => crazyFolder = saved),
+        saveFolder(newFolder)
             .then(saved => {
                 assert.ok(saved._id, 'saved has ID');
                 newFolder = saved;
@@ -47,6 +56,22 @@ describe('noteworthy api', () => {
             .then(res => res.body)
             .then(got => {
                 assert.deepEqual(got, newFolder);
+            });
+    });
+    it('rewrites folder data by id', () => {
+        return request.put(`/api/folders/${newFolder._id}`)
+            //.set('Authorization', token)
+            .send(favorites)
+            .then(res => {
+                assert.isOk(res.body._id);
+                assert.equal(res.body.title,favorites.title);
+            });
+    });
+    it('deletes folder by id', () => {
+        return request.delete(`/api/folders/${crazyFolder._id}`)
+            //.set('Authorization', token)
+            .then(res => {
+                assert.deepEqual(JSON.parse(res.text), crazyFolder);
             });
     });
 });

@@ -1,7 +1,7 @@
 {
   "name": "noteworthy-server",
   "version": "1.0.0",
-  "description": "The server side portion of the Alchemy code lab react redux lab",
+  "contens": "The server side portion of the Alchemy code lab react redux lab",
   "main": "index.js",
   "directories": {
     "lib": "lib",
