@@ -7,11 +7,19 @@ describe('noteworthy api', () => {
     
     before(db.drop);
     before(() => child_process.execSync('mongoimport --file ./lib/data/FolderData.json --jsonArray --db noteworthy-test --collection folders'));
-    before(() => child_process.execSync('mongoimport --file ./lib/data/NoteData.json --jsonArray --db noteworthy-test --collection notes'));    
+    before(() => child_process.execSync('mongoimport --file ./lib/data/NoteData.json --jsonArray --db noteworthy-test --collection notes'));
+    let token = null;
+    before(() => {
+        return db.getToken().then(t => {
+            token = t;
+        })
+        .catch(err => console.log('err==============>',err));
+    });
 
     let note = null;
     before(() => {
         return request.post('/api/notes')
+            .set('Authorization', token)
             .send({title: 'README2'})
             .then(res => res.body)
             .then(savedNote => note = savedNote);
@@ -31,14 +39,17 @@ describe('noteworthy api', () => {
         folder.notes = [{note: note._id}];
         return request
             .post('/api/folders')
+            .set('Authorization', token)
             .send(folder)
             .then(res => res.body);
     }
 
     it('initial /GET returns a main folder', () => {
         return request.get('/api/folders')
-                .then(req => {
-                    const folders = req.body;
+                .set('Authorization', token)
+                .then(res => {
+                    const folders = res.body;
+                    
                     assert.deepEqual(folders[0].title, 'Main Folder');
                 });
     });
@@ -51,7 +62,9 @@ describe('noteworthy api', () => {
                 newFolder = saved;
             })
             .then(() => {
-                return request.get(`/api/folders/${newFolder._id}`);
+                return request
+                .get(`/api/folders/${newFolder._id}`)
+                .set('Authorization', token);
             })
             .then(res => res.body)
             .then(got => {
@@ -60,7 +73,7 @@ describe('noteworthy api', () => {
     });
     it('rewrites folder data by id', () => {
         return request.put(`/api/folders/${newFolder._id}`)
-            //.set('Authorization', token)
+            .set('Authorization', token)
             .send(favorites)
             .then(res => {
                 assert.isOk(res.body._id);
@@ -69,7 +82,7 @@ describe('noteworthy api', () => {
     });
     it('deletes folder by id', () => {
         return request.delete(`/api/folders/${crazyFolder._id}`)
-            //.set('Authorization', token)
+            .set('Authorization', token)
             .then(res => {
                 assert.deepEqual(JSON.parse(res.text), crazyFolder);
             });

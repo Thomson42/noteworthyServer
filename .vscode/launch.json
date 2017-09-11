@@ -1,0 +1,38 @@
+{
+        "version": "0.2.0",
+        "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Tests",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "-u",
+                "tdd",
+                "--timeout",
+                "999999",
+                "--colors",
+                "${workspaceRoot}/test/e2e"
+            ],
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch Server",
+                "program": "${workspaceRoot}/server.js"
+            },
+            {
+                "type": "node",
+                "request": "attach",
+                "name": "Attach by Process ID",
+                "processId": "${command:PickProcess}"
+            },
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch Program",
+                "program": "${file}"
+            }
+        ]
+    }
