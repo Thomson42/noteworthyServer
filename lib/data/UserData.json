@@ -1,0 +1,19 @@
+[
+    {
+        "_id" : {"$oid":"59b6dbefaf224b0580e0e31d"},
+        "hash" : "$2a$08$Rbw3S2Oo94CV6AqUjVBX5eDqZdfv5qn91Grd3F.droBd8tmicphV2",
+        "email" : "Christopher.thomson42@gmail.com",
+        "userNotes" : [
+            {
+                "_id":{"$oid":"59aed384d85bc70a00a3fee8"}
+                }
+        ],
+        "userFolders" : [
+            {
+                "_id":{"$oid":"59aed384d85bc70a00a3feeb"}
+            }
+        ],
+        "roles" : [],
+        "__v" : 0
+    }
+]
